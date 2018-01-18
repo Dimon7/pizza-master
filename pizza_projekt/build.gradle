@@ -1,0 +1,44 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.8.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+
+group = 'whz.pti.eva'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+
+dependencies {
+
+
+
+	compile(
+			"org.projectlombok:lombok:1.16.14",
+			'org.springframework.boot:spring-boot-starter-web',
+			'org.springframework.boot:spring-boot-starter-data-jpa',
+			'com.h2database:h2',
+//            'org.postgresql:postgresql:42.1.4',
+			'org.springframework.boot:spring-boot-starter-thymeleaf',
+			'org.webjars:bootstrap:3.3.7',
+			'org.springframework.boot:spring-boot-starter-security'
+	)
+	testCompile(
+			'org.springframework.boot:spring-boot-starter-test',
+			'org.springframework.security:spring-security-test:4.2.3.RELEASE'
+	)
+}

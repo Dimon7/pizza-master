@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id="pizza_projekt" external.linked.project.path="$MODULE_DIR$/../../pizza_projekt" external.root.project.path="$MODULE_DIR$/../../pizza_projekt" external.system.id="GRADLE" external.system.module.group="whz.pti.eva" external.system.module.version="0.0.1-SNAPSHOT" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../pizza_projekt">
+      <excludeFolder url="file://$MODULE_DIR$/../../pizza_projekt/.gradle" />
+      <excludeFolder url="file://$MODULE_DIR$/../../pizza_projekt/build" />
+      <excludeFolder url="file://$MODULE_DIR$/../../pizza_projekt/out" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>

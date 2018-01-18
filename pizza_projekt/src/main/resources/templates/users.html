@@ -1,0 +1,46 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Pizza</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/mystyle.css" th:href="@{css/mystyle.css}" media="screen"/>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="page-header">
+        <h1>Users</h1>
+        <a th:href="@{/logout}">LogOut</a>
+
+    </div>
+
+    <table class="table able-hover table-bordered table-fixed data-link=row" th:if="${users != null}" >
+        <thead>
+            <tr>
+                <th class="col-md-4">firstName</th>
+                <th class="col-md-4">lastName</th>
+                <th class="col-md-4">loginName</th>
+            </tr>
+        </thead>
+        <tbody>
+        <div th:each="user : ${users}">
+
+         <tr>
+             <td  th:text="${user.firstName}"> </td>
+             <td  th:text="${user.lastName}">  </td>
+             <td> <a th:href="${'/user/' + user.id}" th:text="${user.loginName}">nix</a> </td>
+         </tr>
+
+        </div>
+        <br/>
+
+        </tbody>
+    </table>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Angebot</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/mystyle.css" th:href="@{css/mystyle.css}" media="screen"/>
+</head>
+<body>
+
+<div class="container">
+    <div class="page-header">
+        <h1>Angebot</h1>
+    </div>
+
+    <form th:action="@{/add_to_basket}" method="post">
+        <table class="table able-hover table-bordered table-fixed data-link=row">
+            <thead>
+                <td> Menge </td>
+                <td> Pizza </td>
+                <td> Preis </td>
+            </thead>
+
+                <tbody>
+
+                    <tr th:each="p : ${pizza}">
+
+                        <td class="col-md-2"><input class="menge" type="number" name="quantity"/></td>
+                        <td th:text="${p.name}" ></td>
+                        <td th:text="${p.price + '$'}"></td>
+                        <input type="hidden" name="pizza" />
+                    </tr>
+
+                </tbody>
+        </table>
+        <input type="submit" value="In den Warenkorp" />
+    </form>
+
+</div>
+</body>
+</html>

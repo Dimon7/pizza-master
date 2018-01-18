@@ -1,0 +1,66 @@
+<!-- @ftlvariable name="_csrf" type="org.springframework.security.web.csrf.CsrfToken" -->
+<!-- @ftlvariable name="form" type="eu.kielczewski.example.domain.UserCreateForm" -->
+<!-- import "/spring.ftl" as spring -->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Create a new user</title>
+</head>
+
+
+<body>
+<nav role="navigation">
+    <ul>
+        <li><a href="/">Home</a></li>
+    </ul>
+</nav>
+
+<h1>Create a new user</h1>
+
+<form role="form" name="form" th:action="@{/user/create}" method="post">
+
+
+    <div>
+        <label for="loginName">LoginName</label>
+        <input name="loginName" id="loginName" required="required" autofocus="autofocus"/>
+    </div>
+    <div>
+        <label for="firstName">firstName</label>
+        <input name="firstName" id="firstName" required="required" autofocus="autofocus"/>
+    </div>
+    <div>
+        <label for="lastName">lastName</label>
+        <input name="lastName" id="lastName" required="required" autofocus="autofocus"/>
+    </div>
+    <div>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" required="required"/>
+    </div>
+    <div>
+        <label for="passwordRepeated">Repeat</label>
+        <input type="password" name="passwordRepeated" id="passwordRepeated" required="required"/>
+    </div>
+    <div>
+        <label for="role">Role</label>
+        <select name="role" id="role" required="required">
+            <option value="USER"> USER</option>
+            <option value="ADMIN"> ADMIN</option>
+        </select>
+    </div>
+    <button type="submit">Save</button>
+</form>
+
+<!--<@spring.bind "form" />
+<#if spring.status.error>
+<ul>
+    <#list spring.status.errorMessages as error>
+    <li>${error}</li>
+</#list>
+</ul>
+</#if>-->
+
+</body>
+</html>
+

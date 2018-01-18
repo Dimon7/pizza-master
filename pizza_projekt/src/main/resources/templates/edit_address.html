@@ -1,0 +1,56 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Pizza</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/mystyle.css" th:href="@{css/mystyle.css}" media="screen"/>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="page-header">
+        <h1>Address bearbeiten</h1>
+    </div>
+
+    <table class="table able-hover table-bordered table-fixed data-link=row" th:if="${currentAddress != null}" >
+        <thead></thead>
+
+        <tbody>
+        <form th:action="@{/finish_edit_addres_data}" method="post">
+            <tr >
+                <td> Street: </td>
+                <td> <input class="form-control" type="text" name="street" maxlength="255" th:value="${currentAddress.street}"/> </td>
+            </tr>
+            <tr>
+                <td> ZipCode:</td>
+                <td><input class="form-control" type="text" name="zipCode" maxlength="255" th:value="${currentAddress.zipCode}"/></td>
+            </tr>
+
+            <tr>
+                <td> Town:</td>
+                <td><input class="form-control" type="text" name="town" maxlength="255" th:value="${currentAddress.town}"/></td>
+            </tr>
+
+
+            <tr>
+                <td>HouseNumber:</td>
+                <td><input class="form-control" type="text" name="housenumber" maxlength="255" th:value="${currentAddress.housenumber}"/></td>
+            </tr>
+
+            <input class="form-control" type="hidden" name="id" th:value="${currentAddress.id}"/>
+            <br/>
+            <tr>
+                <td><input class="btn-primary" type="submit" value="Address speichern"/> </td>
+            </tr>
+        </form>
+        </tbody>
+    </table>
+
+
+</div>
+</body>
+</html>

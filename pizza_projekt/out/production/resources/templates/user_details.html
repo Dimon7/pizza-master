@@ -1,0 +1,86 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Pizza</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/mystyle.css" th:href="@{css/mystyle.css}" media="screen"/>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Nutzerdatenverwaltung</h1>
+        </div>
+
+        <form th:action="@{/logout}" method="post">
+            <button class="btn-primary" type="submit">Log out</button>
+        </form>
+
+
+
+        <table class="table able-hover table-bordered table-fixed data-link=row" th:if="${currentCustomer != null}" >
+            <thead></thead>
+
+            <tbody>
+            <tr >
+                <td> FirstName: </td> <td th:text="${currentCustomer.firstName}"></td>
+            </tr>
+            <tr>
+                <td>LastName:</td> <td th:text="${currentCustomer.lastName}"></td>
+            </tr>
+            <tr>
+                <td>LoginName:</td>  <td th:text="${currentCustomer.loginName}"></td>
+            </tr>
+            <br/>
+            <tr>
+                <td>
+                    <form th:action="@{/start_edit_customer_data}" method="post">
+                        <input class="btn-primary" type="submit" value="NutzerDaten bearbeiten"/>
+                        <input class="form-control" type="hidden" name="loginName" th:value="${currentCustomer.loginName}"/>
+                    </form>
+                </td>
+
+            </tr>
+<!--
+            <div class="page-header">
+                <h1>Meine Adressen</h1>
+            </div>-->
+            <tr>
+                <td><h1>Meine Adresse</h1></td>
+            </tr>
+            <tr th:each="addres, iterStat : ${currentCustomer.addresses}" >
+                <td th:text="${addres.street + ' ' + addres.housenumber +' '+ addres.zipCode + ' ' + addres.town}"></td>
+                <form th:action="@{/start_edit_addres_data}" method="post">
+                    <td><input class="btn-primary" type="submit" th:value="Addresse +' '+ ${iterStat.index+1} + ' ' + bearbeiten" /></td>
+                    <input class="form-control" type="hidden" name="id" th:value="${addres.id}"/>
+                </form>
+
+                <form th:action="@{/delete_addres}" method="post">
+                    <td><input type="submit" class="btn-danger" value="Address delete" /></td>
+                    <input class="form-control" type="hidden" name="id" th:value="${addres.id}"/>
+                    <input class="form-control" type="hidden" name="loginName" th:value="${currentCustomer.loginName}"/>
+                </form>
+
+            </tr>
+
+            <tr>
+
+
+                <form th:action="@{/add_addres}" method="get">
+                    <td> <input class="btn-primary" type="submit" th:value="Adresse + hinzufügen"/> </td>
+                    <input class="form-control" type="hidden" name="loginName" th:value="${currentCustomer.loginName}"/>
+                </form>
+            </tr>
+
+            </tbody>
+        </table>
+
+
+
+    </div>
+</body>
+</html>

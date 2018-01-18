@@ -1,0 +1,46 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Pizza</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/mystyle.css" th:href="@{css/mystyle.css}" media="screen"/>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="page-header">
+        <h1>Nutzerdaten bearbeiten</h1>
+    </div>
+
+    <table class="table able-hover table-bordered table-fixed data-link=row" th:if="${currentCustomer != null}" >
+        <thead></thead>
+
+        <tbody>
+        <form th:action="@{/finish_edit_customer_data}" method="post">
+            <tr >
+                <td> Vorname: </td>
+                <td> <input class="form-control" type="text" name="firstName" maxlength="255" th:value="${currentCustomer.firstName}"/> </td>
+            </tr>
+            <tr>
+                <td> Nachname:</td>
+                <td><input class="form-control" type="text" name="lastName" maxlength="255" th:value="${currentCustomer.lastName}"/></td>
+            </tr>
+
+
+            <br/>
+            <tr>
+                <input type="hidden" name="loginName"  th:value="${currentCustomer.loginName}" />
+                <td><input class="btn-primary" type="submit" value="NutzerDaten bearbeiten"/> </td>
+            </tr>
+        </form>
+        </tbody>
+    </table>
+
+
+</div>
+</body>
+</html>
