@@ -1,5 +1,8 @@
 package whz.pti.eva.pizza_projekt.customer.domain;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,9 +16,9 @@ public class ShoppingCart {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    private Date creationDate;
+    @Getter @Setter private String timestamp;
 
-    @OneToMany
+    @OneToMany(mappedBy = "shoppingCart")
     List<Item> items;
 
     @ManyToOne
@@ -23,8 +26,11 @@ public class ShoppingCart {
 
     public ShoppingCart(){}
 
-    ShoppingCart(Date creationDate){
-        this.items = new ArrayList<>();
-        this.creationDate = creationDate;
+    public ShoppingCart(String timestamp, List<Item> items, Customer customer){
+        this.items = items;
+        this.timestamp = timestamp;
+        this.customer = customer;
     }
+
+
 }

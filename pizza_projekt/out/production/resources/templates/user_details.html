@@ -68,12 +68,16 @@
             </tr>
 
             <tr>
-
-
                 <form th:action="@{/add_addres}" method="get">
                     <td> <input class="btn-primary" type="submit" th:value="Adresse + hinzufügen"/> </td>
                     <input class="form-control" type="hidden" name="loginName" th:value="${currentCustomer.loginName}"/>
                 </form>
+            </tr>
+
+            <tr>
+                <td> Card </td>
+                <td th:text="${account}"> </td>
+
             </tr>
 
             </tbody>

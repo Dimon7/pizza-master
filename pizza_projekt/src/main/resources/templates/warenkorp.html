@@ -24,8 +24,6 @@
         </thead>
 
         <tbody>
-
-
             <tr th:each="p : ${pizza}">
                 <tr th:each="i : ${p.items}">
                     <td th:text="${i.quantity}"></td>
@@ -34,14 +32,14 @@
                 </tr>
 
             </tr>
-
-
-
         </tbody>
 
     </table>
     <h4 th:text="${'Gesamptpreis ' + gesamptpreis + '$'}"></h4>
-    <input type="submit" value="Kostenpflichtig bestellen" />
+
+    <form th:action="@{/bestellen}" method="post">
+        <button class="btn-primary" type="submit">Kostenpflichtig bestellen</button>
+    </form>
     <input type="submit" value="Warenkorp leeren" />
 
 

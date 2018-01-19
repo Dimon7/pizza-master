@@ -2,6 +2,7 @@ package whz.pti.eva.pizza_projekt.customer.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import whz.pti.eva.pizza_projekt.customer.domain.Item;
 import whz.pti.eva.pizza_projekt.customer.domain.Pizza;
 import whz.pti.eva.pizza_projekt.customer.domain.repo.PizzaRepository;
 
@@ -12,6 +13,8 @@ public class PizzaServiceImpl implements PizzaService {
 
     @Autowired
     PizzaRepository pizzaRepository;
+
+
 
 
     @Override

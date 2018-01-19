@@ -16,15 +16,17 @@ public class Item {
     @Getter @Setter private int quantity;
 
     @ManyToOne
-    Pizza pizza;
+    @Setter Pizza pizza;
 
     @ManyToOne
-    ShoppingCart shoppingCart;
+    @Setter ShoppingCart shoppingCart;
 
     public Item(){}
 
-    public Item(int quantity){
+    public Item(int quantity, Pizza pizza){
+
         this.quantity = quantity;
+        this.pizza = pizza;
     }
 
 }

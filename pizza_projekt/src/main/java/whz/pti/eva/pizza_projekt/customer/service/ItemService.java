@@ -5,11 +5,10 @@ import whz.pti.eva.pizza_projekt.customer.domain.Pizza;
 
 import java.util.List;
 
-public interface PizzaService {
+public interface ItemService {
 
-    List<Pizza> getAllPizza();
+    void addItem(int quantity, Pizza pizza);
 
-    double gesamptpreis();
-
+    List<Item> getAllItems();
 
 }

@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import whz.pti.eva.pizza_projekt.customer.domain.Customer;
 import whz.pti.eva.pizza_projekt.customer.domain.CustomerCreateForm;
+import whz.pti.eva.pizza_projekt.customer.domain.DTO.PayActionResponseDTO;
 import whz.pti.eva.pizza_projekt.customer.domain.validator.CustomerCreateFormValidator;
 import whz.pti.eva.pizza_projekt.customer.service.CustomerServiceImpl;
+import whz.pti.eva.pizza_projekt.customer.service.MPA.SmmpService;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -29,6 +31,8 @@ public class CustomerController {
 
     @Autowired private CustomerCreateFormValidator createFormValidator;
 
+    @Autowired  private SmmpService smmpService;
+
     @InitBinder("form")
     public void initBinder(WebDataBinder binder) {
         binder.addValidators(createFormValidator);
@@ -36,9 +40,17 @@ public class CustomerController {
 
 
     @RequestMapping("/user")
-    public ModelAndView getCustomerPage(Principal principal, Model model){
-        return new ModelAndView("user_details", "currentCustomer", customerService.getCustomerByLoginName(principal.getName())
+    public String getCustomerPage(Principal principal, Model model){
+
+        model.addAttribute("currentCustomer", customerService.getCustomerByLoginName(principal.getName())
                 .orElseThrow(() -> new NoSuchElementException(String.format("User=%s not found", principal.getName()))));
+
+        PayActionResponseDTO payActionResponse = smmpService.doPayAction(principal.getName(), "", "get");
+
+        model.addAttribute("account", payActionResponse.getDescription());
+
+
+        return "user_details";
     }
 
     @PreAuthorize("@currentCustomerServiceImpl.canAccessCustomer(principal, #id)")

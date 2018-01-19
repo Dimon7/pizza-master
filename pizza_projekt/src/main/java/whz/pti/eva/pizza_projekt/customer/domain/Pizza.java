@@ -21,7 +21,7 @@ public class Pizza {
 
     @Getter @Setter private double price;
 
-    @OneToMany
+    @OneToMany(mappedBy = "pizza")
     private List<Item> items;
 
     public Pizza(){}
