@@ -15,11 +15,19 @@ public class ShopServiceImpl implements ShopService {
     @Autowired private ShoppingCartRepository shoppingCartRepository;
 
     @Override
-    public void buy(String timestamp, List<Item> items, Customer customer) {
-        ShoppingCart shoppingCart = new ShoppingCart(timestamp, items, customer);
+    public void buy(String timestamp, List<Item> items, int id) {
 
+        ShoppingCart shoppingCart = shoppingCartRepository.getOne(id);
+        shoppingCart.setTimestamp(timestamp);
         shoppingCartRepository.save(shoppingCart);
+    }
 
+    @Override
+    public ShoppingCart addShoppingCart( Customer customer){
+
+        ShoppingCart shoppingCart = new ShoppingCart(customer);
+        shoppingCartRepository.save(shoppingCart);
+        return shoppingCart;
 
     }
 }

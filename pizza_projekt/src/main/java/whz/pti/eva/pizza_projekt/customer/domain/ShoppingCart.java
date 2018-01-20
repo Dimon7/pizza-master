@@ -2,6 +2,7 @@ package whz.pti.eva.pizza_projekt.customer.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@ToString
 public class ShoppingCart {
 
 
@@ -26,9 +28,7 @@ public class ShoppingCart {
 
     public ShoppingCart(){}
 
-    public ShoppingCart(String timestamp, List<Item> items, Customer customer){
-        this.items = items;
-        this.timestamp = timestamp;
+    public ShoppingCart(Customer customer){
         this.customer = customer;
     }
 

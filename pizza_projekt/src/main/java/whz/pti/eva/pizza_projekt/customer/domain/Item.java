@@ -23,10 +23,11 @@ public class Item {
 
     public Item(){}
 
-    public Item(int quantity, Pizza pizza){
+    public Item(int quantity, Pizza pizza, ShoppingCart shoppingCart){
 
         this.quantity = quantity;
         this.pizza = pizza;
+        this.shoppingCart = shoppingCart;
     }
 
 }

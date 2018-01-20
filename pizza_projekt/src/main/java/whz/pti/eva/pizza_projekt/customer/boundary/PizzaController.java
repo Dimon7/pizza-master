@@ -1,5 +1,7 @@
 package whz.pti.eva.pizza_projekt.customer.boundary;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import whz.pti.eva.pizza_projekt.customer.domain.Item;
 import whz.pti.eva.pizza_projekt.customer.domain.Pizza;
+import whz.pti.eva.pizza_projekt.customer.domain.ShoppingCart;
 import whz.pti.eva.pizza_projekt.customer.service.CustomerServiceImpl;
 import whz.pti.eva.pizza_projekt.customer.service.ItemServiceImpl;
 import whz.pti.eva.pizza_projekt.customer.service.PizzaServiceImpl;
@@ -28,6 +31,9 @@ public class PizzaController {
     @Autowired
     PizzaServiceImpl pizzaService;
 
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(PizzaController.class);
+
     @Autowired private ShopServiceImpl shopService;
     @Autowired private CustomerServiceImpl customerService;
     @Autowired private ItemServiceImpl itemService;
@@ -41,17 +47,20 @@ public class PizzaController {
     }
 
     @RequestMapping("/add_to_basket")
-    public String addTobBasket(@RequestParam List<Integer> quantity, Model model){
+    public String addTobBasket(@RequestParam List<Integer> quantity, Model model, Principal principal){
         List<Pizza> pizza = pizzaService.getAllPizza();
-
+        ShoppingCart shoppingCart = shopService.addShoppingCart( customerService.getCustomerByLoginName(principal.getName()).get() );
+        LOGGER.debug( shoppingCart.toString() );
         int i=0;
         for(Pizza p : pizza){
             if(quantity.get(i) != null){
-                itemService.addItem(quantity.get(i), p);
+                itemService.addItem(quantity.get(i), p, shoppingCart);
             }
             i++;
         }
-        List<Item> items = itemService.getAllItems();
+
+        long customerId = customerService.getCustomerByLoginName(principal.getName()).get().getId();
+        List<Item> items = itemService.getAllItemsByCustomer(customerId);
         model.addAttribute("pizza", pizza);
         model.addAttribute("items", items);
         model.addAttribute("gesamptpreis", pizzaService.gesamptpreis());
@@ -61,16 +70,6 @@ public class PizzaController {
 
     @RequestMapping(value = "/bestellen", method = RequestMethod.POST)
     public String showItems(Principal principal ){
-
-        List<Item> items = itemService.getAllItems();
-
-        DateTimeFormatter germanFormatter =
-                ofLocalizedTime(FormatStyle.MEDIUM)
-                        .withLocale(Locale.GERMAN);
-        String s = LocalTime.now().minusMinutes(10).format(germanFormatter);
-
-        shopService.buy(s, items, customerService.getCustomerByLoginName(principal.getName()).get());
-
         return "redirect:/user";
     }
 

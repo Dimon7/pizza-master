@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@ToString(exclude="id")
+@ToString(exclude= {"id", "addresses", "shoppingCart"})
 @EqualsAndHashCode(exclude="id")
 @NoArgsConstructor
 public class Customer implements Serializable {
@@ -20,7 +20,7 @@ public class Customer implements Serializable {
     @ManyToMany
     @Getter List<Address> addresses;
 
-    @OneToMany
+    @OneToMany(mappedBy = "customer")
     List<ShoppingCart> shoppingCart;
 
     @Column(name="firstName", nullable = false)
