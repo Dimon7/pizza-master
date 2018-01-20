@@ -2,6 +2,7 @@ package whz.pti.eva.pizza_projekt.customer.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
+@ToString(exclude = {"items"})
 public class Pizza {
 
 

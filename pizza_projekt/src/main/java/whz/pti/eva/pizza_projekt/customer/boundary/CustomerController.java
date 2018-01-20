@@ -62,14 +62,14 @@ public class CustomerController {
     }
 
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+
     @RequestMapping(value = "/user/create", method = RequestMethod.GET)
     public ModelAndView getUserCreatePage() {
         return new ModelAndView("user_create", "form", new CustomerCreateForm());
     }
 
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+
     @RequestMapping(value = "/user/create", method = RequestMethod.POST)
     public String handleUserCreateForm(@Valid @ModelAttribute("form")  CustomerCreateForm form, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {

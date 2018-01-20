@@ -13,4 +13,6 @@ public interface ItemService {
     List<Item> getAllItems();
     List<Item> getAllItemsByCustomer(long customerId);
 
+    void basketDelete(long customerId);
+
 }

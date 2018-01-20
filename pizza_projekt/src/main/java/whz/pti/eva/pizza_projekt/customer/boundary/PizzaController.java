@@ -17,13 +17,7 @@ import whz.pti.eva.pizza_projekt.customer.service.PizzaServiceImpl;
 import whz.pti.eva.pizza_projekt.customer.service.ShopServiceImpl;
 
 import java.security.Principal;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.List;
-import java.util.Locale;
-
-import static java.time.format.DateTimeFormatter.ofLocalizedTime;
 
 @Controller
 public class PizzaController {
@@ -46,11 +40,18 @@ public class PizzaController {
         return "angebot";
     }
 
+
+
+
     @RequestMapping("/add_to_basket")
     public String addTobBasket(@RequestParam List<Integer> quantity, Model model, Principal principal){
+
         List<Pizza> pizza = pizzaService.getAllPizza();
-        ShoppingCart shoppingCart = shopService.addShoppingCart( customerService.getCustomerByLoginName(principal.getName()).get() );
-        LOGGER.debug( shoppingCart.toString() );
+        long customerId = customerService.getCustomerByLoginName(principal.getName()).get().getId();
+
+        ShoppingCart shoppingCart = shopService.getShoppingCartByCustomerId(customerId);
+
+
         int i=0;
         for(Pizza p : pizza){
             if(quantity.get(i) != null){
@@ -59,17 +60,38 @@ public class PizzaController {
             i++;
         }
 
+        List<Item> items = itemService.getAllItemsByCustomer(customerId);
+
+        model.addAttribute("items", items);
+        model.addAttribute("gesamptpreis", pizzaService.gesamptpreis(items));
+
+        return "warenkorp";
+    }
+
+    @RequestMapping("/warenkorp")
+    public String addTobBasket( Model model, Principal principal){
+
         long customerId = customerService.getCustomerByLoginName(principal.getName()).get().getId();
         List<Item> items = itemService.getAllItemsByCustomer(customerId);
-        model.addAttribute("pizza", pizza);
+
         model.addAttribute("items", items);
-        model.addAttribute("gesamptpreis", pizzaService.gesamptpreis());
+        model.addAttribute("gesamptpreis", pizzaService.gesamptpreis(items));
 
         return "warenkorp";
     }
 
     @RequestMapping(value = "/bestellen", method = RequestMethod.POST)
     public String showItems(Principal principal ){
+        return "redirect:/user";
+    }
+
+    @RequestMapping(value = "/leeren", method = RequestMethod.POST)
+    public String deleteBasket(Principal principal){
+
+        long customerId = customerService.getCustomerByLoginName(principal.getName()).get().getId();
+        itemService.basketDelete(customerId);
+
+
         return "redirect:/user";
     }
 

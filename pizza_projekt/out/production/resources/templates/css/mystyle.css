@@ -32,3 +32,7 @@ h2{
 button a{
     color: white;
 }
+
+.bestellen{
+    display: inline-block;
+}

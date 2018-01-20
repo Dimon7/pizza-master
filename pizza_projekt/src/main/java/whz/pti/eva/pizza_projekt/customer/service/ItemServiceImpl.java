@@ -39,11 +39,17 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<Item> getAllItemsByCustomer(long customerId) {
-        String qlQuery = "select t from Item t where (t.SHOPPING_CART_ID = :CUSTOMER_ID)";
+        String qlQuery = "select t from Item t where (t.shoppingCart.customer.id = :CUSTOMER_ID)";
 
         TypedQuery query= em.createQuery(qlQuery, Item.class );
         query.setParameter("CUSTOMER_ID", customerId);
 
         return query.getResultList();
+    }
+
+    @Override
+    public void basketDelete(long customerId) {
+
+        itemRepository.delete( getAllItemsByCustomer(customerId) );
     }
 }

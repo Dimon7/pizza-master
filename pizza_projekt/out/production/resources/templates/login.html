@@ -37,6 +37,10 @@
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 
+        <button class="btn btn-lg btn-primary btn-block" type="submit">
+            <a href="/user/create">Sign Up</a>
+        </button>
+
         <div th:if="${error.isPresent()}">
             <br />
             <div class="alert alert-danger">

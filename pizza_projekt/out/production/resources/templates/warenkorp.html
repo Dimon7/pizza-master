@@ -7,12 +7,22 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"/>
     <link rel="stylesheet" type="text/css" href="css/mystyle.css" th:href="@{css/mystyle.css}" media="screen"/>
 </head>
+
+<style>
+    .bestellen, .leeren{
+        display: inline-block;
+    }
+
+</style>
+
 <body>
 
 <div class="container">
     <div class="page-header">
         <h1>Warenkorp</h1>
     </div>
+
+    <a href="/user">Profile</a>
 
 
     <table class="table able-hover table-bordered table-fixed data-link=row">
@@ -24,23 +34,24 @@
         </thead>
 
         <tbody>
-            <tr th:each="p : ${pizza}">
-                <tr th:each="i : ${p.items}">
-                    <td th:text="${i.quantity}"></td>
-                    <td th:text="${p.name}" ></td>
-                    <td th:text="${p.price}" ></td>
-                </tr>
-
+            <tr th:each="i : ${items}">
+                <td th:text="${i.quantity}"></td>
+                <td th:text="${i.pizza.name}"></td>
+                <td th:text="${i.pizza.price}"></td>
             </tr>
         </tbody>
 
     </table>
     <h4 th:text="${'Gesamptpreis ' + gesamptpreis + '$'}"></h4>
 
-    <form th:action="@{/bestellen}" method="post">
+    <form th:action="@{/bestellen}" method="post" class="bestellen">
         <button class="btn-primary" type="submit">Kostenpflichtig bestellen</button>
     </form>
-    <input type="submit" value="Warenkorp leeren" />
+
+    <form th:action="@{/leeren}" method="post" class="leeren" >
+        <button class="btn-danger" type="submit" >Warenkorp leeren</button>
+    </form>
+
 
 
 </div>

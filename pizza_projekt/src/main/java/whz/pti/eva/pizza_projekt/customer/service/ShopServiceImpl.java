@@ -30,4 +30,9 @@ public class ShopServiceImpl implements ShopService {
         return shoppingCart;
 
     }
+
+    @Override
+    public ShoppingCart getShoppingCartByCustomerId(long id) {
+        return shoppingCartRepository.getShoppingCartByCustomerId(id);
+    }
 }

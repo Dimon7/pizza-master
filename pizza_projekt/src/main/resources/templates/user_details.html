@@ -9,6 +9,13 @@
     <link rel="stylesheet" type="text/css" href="css/mystyle.css" th:href="@{css/mystyle.css}" media="screen"/>
 </head>
 
+<style type="text/css">
+    .login{
+        display: inline-block;
+        float: right;
+    }
+</style>
+
 <body>
 
     <div class="container">
@@ -16,42 +23,47 @@
             <h1>Nutzerdatenverwaltung</h1>
         </div>
 
-        <form th:action="@{/logout}" method="post">
+        <form th:action="@{/logout}" method="post" class="login">
             <button class="btn-primary" type="submit">Log out</button>
         </form>
+
+        <a href="/warenkorp">Warenkorp</a>
+        <a href="/angebot">Angebot</a>
 
 
 
         <table class="table able-hover table-bordered table-fixed data-link=row" th:if="${currentCustomer != null}" >
-            <thead></thead>
+            <thead>
+                <tr>
+                    <th class="col-md-4">firstName</th>
+                    <th class="col-md-4">lastName</th>
+                    <th class="col-md-4">loginName</th>
+                    <th class="col-md-4"></th>
+                </tr>
+            </thead>
 
             <tbody>
-            <tr >
-                <td> FirstName: </td> <td th:text="${currentCustomer.firstName}"></td>
-            </tr>
             <tr>
-                <td>LastName:</td> <td th:text="${currentCustomer.lastName}"></td>
-            </tr>
-            <tr>
-                <td>LoginName:</td>  <td th:text="${currentCustomer.loginName}"></td>
-            </tr>
-            <br/>
-            <tr>
+                <td th:text="${currentCustomer.firstName}"></td>
+                <td th:text="${currentCustomer.lastName}"></td>
+                <td th:text="${currentCustomer.loginName}"></td>
                 <td>
                     <form th:action="@{/start_edit_customer_data}" method="post">
                         <input class="btn-primary" type="submit" value="NutzerDaten bearbeiten"/>
                         <input class="form-control" type="hidden" name="loginName" th:value="${currentCustomer.loginName}"/>
                     </form>
                 </td>
+            </tr>
+            </tbody>
+        </table>
 
-            </tr>
-<!--
-            <div class="page-header">
-                <h1>Meine Adressen</h1>
-            </div>-->
-            <tr>
-                <td><h1>Meine Adresse</h1></td>
-            </tr>
+        <table class="table able-hover table-bordered table-fixed data-link=row">
+            <thead></thead>
+            <tbody>
+            <div>
+                <h1>Meine Adresse</h1>
+            </div>
+
             <tr th:each="addres, iterStat : ${currentCustomer.addresses}" >
                 <td th:text="${addres.street + ' ' + addres.housenumber +' '+ addres.zipCode + ' ' + addres.town}"></td>
                 <form th:action="@{/start_edit_addres_data}" method="post">
@@ -65,19 +77,23 @@
                     <input class="form-control" type="hidden" name="loginName" th:value="${currentCustomer.loginName}"/>
                 </form>
 
-            </tr>
-
-            <tr>
                 <form th:action="@{/add_addres}" method="get">
                     <td> <input class="btn-primary" type="submit" th:value="Adresse + hinzufügen"/> </td>
                     <input class="form-control" type="hidden" name="loginName" th:value="${currentCustomer.loginName}"/>
                 </form>
+
             </tr>
+            </tbody>
+        </table>
+
+        <table class="table able-hover table-bordered table-fixed data-link=row">
+            <tbody>
+             <div>
+                 <h1>Cards</h1>
+             </div>
 
             <tr>
-                <td> Card </td>
                 <td th:text="${account}"> </td>
-
             </tr>
 
             </tbody>

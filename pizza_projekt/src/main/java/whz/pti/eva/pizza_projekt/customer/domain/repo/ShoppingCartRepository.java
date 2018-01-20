@@ -7,5 +7,6 @@ import whz.pti.eva.pizza_projekt.customer.domain.ShoppingCart;
 @Repository
 public interface ShoppingCartRepository extends JpaRepository<ShoppingCart, Integer> {
 
+    ShoppingCart getShoppingCartByCustomerId(long id);
 
 }

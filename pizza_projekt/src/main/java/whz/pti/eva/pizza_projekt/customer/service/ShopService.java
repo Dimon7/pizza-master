@@ -12,4 +12,6 @@ public interface ShopService {
 
     ShoppingCart addShoppingCart(Customer customer);
 
+    ShoppingCart getShoppingCartByCustomerId(long id);
+
 }

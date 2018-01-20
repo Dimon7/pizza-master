@@ -14,6 +14,9 @@ public class PizzaServiceImpl implements PizzaService {
     @Autowired
     PizzaRepository pizzaRepository;
 
+    @Autowired
+    ItemServiceImpl itemService;
+
 
 
 
@@ -23,16 +26,13 @@ public class PizzaServiceImpl implements PizzaService {
     }
 
     @Override
-    public double gesamptpreis() {
-
+    public double gesamptpreis(List<Item> items) {
+        System.out.println(items);
         double preis = 0.0;
-        List<Pizza> pizzas = pizzaRepository.findAll();
 
-        for(Pizza p : pizzas){
 
-            if(!p.getItems().isEmpty()) {
-                preis += p.getItems().get(0).getQuantity() * p.getPrice();
-            }
+        for(Item item : items){
+            preis += item.getPizza().getPrice() * item.getQuantity() ;
 
         }
 

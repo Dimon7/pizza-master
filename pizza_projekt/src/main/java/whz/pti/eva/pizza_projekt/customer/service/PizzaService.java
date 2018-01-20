@@ -9,7 +9,7 @@ public interface PizzaService {
 
     List<Pizza> getAllPizza();
 
-    double gesamptpreis();
+    double gesamptpreis(List<Item> items);
 
 
 }
