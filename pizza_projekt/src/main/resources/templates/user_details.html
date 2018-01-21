@@ -7,12 +7,16 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"/>
     <link rel="stylesheet" type="text/css" href="css/mystyle.css" th:href="@{css/mystyle.css}" media="screen"/>
+    <script src="https://use.fontawesome.com/de3157d87b.js"></script>
 </head>
 
 <style type="text/css">
     .login{
         display: inline-block;
         float: right;
+    }
+    .warenkorp{
+        margin-right: 40px;
     }
 </style>
 
@@ -23,12 +27,27 @@
             <h1>Nutzerdatenverwaltung</h1>
         </div>
 
-        <form th:action="@{/logout}" method="post" class="login">
-            <button class="btn-primary" type="submit">Log out</button>
-        </form>
+        <div class="well">
 
-        <a th:if="${#strings.toString(currentCustomer.role) == 'USER'}" href="/warenkorp">Warenkorp</a>
-        <a href="/angebot">Angebot</a>
+            <div class="col-md-2 warenkorp" th:if="${#strings.toString(currentCustomer.role) == 'USER'}">
+                <a  href="/warenkorp" th:text="${'Warenkorp' + '(' + count + ')'}"></a>
+                <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+            </div>
+
+
+            <a href="/angebot">Angebot</a>
+            <i class="fa fa-cutlery" aria-hidden="true"></i>
+
+            <div class="col-md-2 warenkorp" th:if="${#strings.toString(currentCustomer.role) == 'ADMIN'}">
+                <a  href="/users" th:text="${'Users'}"></a>
+                <i class="fa fa-user" aria-hidden="true"></i>
+            </div>
+
+            <form th:action="@{/logout}" method="post" class="login">
+                <button class="btn-primary" type="submit">Log out <i class="fa fa-sign-out" aria-hidden="true"></i> </button>
+            </form>
+
+        </div>
 
 
 
@@ -38,7 +57,9 @@
                     <th class="col-md-4">loginName</th>
                     <th class="col-md-4">firstName</th>
                     <th class="col-md-4">lastName</th>
-                    <th class="col-md-4"></th>
+                    <th class="col-md-4">
+                        <span class="text-danger" th:if="${#strings.toString(currentCustomer.role) == 'ADMIN'}" th:text="admin" ></span>
+                    </th>
                 </tr>
             </thead>
 
@@ -88,18 +109,17 @@
 
         <table class="table able-hover table-bordered table-fixed data-link=row" th:if="${#strings.toString(currentCustomer.role) == 'USER'}">
             <tbody>
+
              <div>
                  <h1>Cards</h1>
              </div>
 
             <tr>
-                <td th:text="${account}"> </td>
+                <td th:text="${account + ' $'}"> </td>
             </tr>
 
             </tbody>
         </table>
-
-
 
     </div>
 </body>

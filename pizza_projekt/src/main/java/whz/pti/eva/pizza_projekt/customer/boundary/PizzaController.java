@@ -78,8 +78,11 @@ public class PizzaController {
         List<Item> items = itemService.getAllItemsByCustomer(customerId);
 
         model.addAttribute("items", items);
-        model.addAttribute("gesamptpreis", pizzaService.gesamptpreis(items));
 
+        model.addAttribute("gesamptpreis", pizzaService.gesamptpreis(items));
+        if(items.isEmpty()){
+            return "redirect:/user";
+        }
         return "warenkorp";
     }
 

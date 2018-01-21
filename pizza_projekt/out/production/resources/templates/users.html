@@ -14,25 +14,28 @@
 <div class="container">
     <div class="page-header">
         <h1>Users</h1>
-        <a th:href="@{/logout}">LogOut</a>
+    </div>
 
+    <div class="well">
+        <a href="/user">Profile </a>
+        <i class="fa fa-user" aria-hidden="true"></i>
     </div>
 
     <table class="table able-hover table-bordered table-fixed data-link=row" th:if="${users != null}" >
         <thead>
             <tr>
+                <th class="col-md-4">loginName</th>
                 <th class="col-md-4">firstName</th>
                 <th class="col-md-4">lastName</th>
-                <th class="col-md-4">loginName</th>
             </tr>
         </thead>
         <tbody>
         <div th:each="user : ${users}">
 
          <tr>
+             <td> <a th:href="${'/user/' + user.id}" th:text="${user.loginName}"></a> </td>
              <td  th:text="${user.firstName}"> </td>
              <td  th:text="${user.lastName}">  </td>
-             <td> <a th:href="${'/user/' + user.id}" th:text="${user.loginName}">nix</a> </td>
          </tr>
 
         </div>

@@ -52,7 +52,11 @@
             <label for="passwordRepeated">Repeat</label>
             <input class="form-control input-lg" type="password" name="passwordRepeated" id="passwordRepeated" required="required"/>
         </div>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
+        <br/>
+        <div class="alert alert-danger" th:if="${error}">
+            <span th:text="${error}"></span>
+        </div>
     </div>
 </form>
 

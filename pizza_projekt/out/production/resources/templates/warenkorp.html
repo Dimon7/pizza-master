@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
     <title>Warenkorp</title>
@@ -22,10 +22,16 @@
         <h1>Warenkorp</h1>
     </div>
 
-    <a href="/user">Profile</a>
 
 
-    <table class="table able-hover table-bordered table-fixed data-link=row">
+
+    <div class="well">
+        <a href="/user">Profile </a>
+        <i class="fa fa-user" aria-hidden="true"></i>
+    </div>
+
+
+    <table class="table able-hover table-bordered table-fixed data-link=row" th:if="${!items.isEmpty()}">
         <thead>
             <td> Menge </td>
             <td> Pizza </td>
@@ -37,7 +43,7 @@
             <tr th:each="i : ${items}">
                 <td th:text="${i.quantity}"></td>
                 <td th:text="${i.pizza.name}"></td>
-                <td th:text="${i.pizza.price}"></td>
+                <td th:text="${i.pizza.price + '$'}"></td>
             </tr>
         </tbody>
 
