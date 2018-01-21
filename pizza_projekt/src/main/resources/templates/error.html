@@ -1,0 +1,16 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>EvaChatApp - Fehler</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"/>
+</head>
+<body>
+<h3>some errors</h3>
+<h1 th:text="${errorCode}">XXX</h1>
+<p th:utext="${errorMessage}">Error</p>
+<a href="/" th:href="@{/user}">Back to Home Page</a>
+</body>
+</html>

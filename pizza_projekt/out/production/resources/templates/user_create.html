@@ -3,10 +3,15 @@
 <!-- import "/spring.ftl" as spring -->
 
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8" />
-    <title>Create a new user</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/mystyle.css" media="screen"/>
+
+    <meta charset="utf-8"/>
+    <title>Create new user</title>
 </head>
 
 
@@ -17,39 +22,38 @@
     </ul>
 </nav>
 
-<h1>Create a new user</h1>
+<div>
+    <h1 class="text-center">
+        <span>Create new user</span>
+    </h1>
+    <br />
+</div>
 
 <form role="form" name="form" th:action="@{/user/create}" method="post">
 
-
-    <div>
-        <label for="loginName">LoginName</label>
-        <input name="loginName" id="loginName" required="required" autofocus="autofocus"/>
+    <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
+        <div class="form-group">
+            <label for="loginName">LoginName</label>
+            <input class="form-control input-lg" name="loginName" id="loginName" required="required" autofocus="autofocus"/>
+        </div>
+        <div class="form-group">
+            <label for="firstName">firstName</label>
+            <input class="form-control input-lg" name="firstName" id="firstName" required="required" autofocus="autofocus"/>
+        </div>
+        <div class="form-group">
+            <label for="lastName">lastName</label>
+            <input class="form-control input-lg" name="lastName" id="lastName" required="required" autofocus="autofocus"/>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input class="form-control input-lg" type="password" name="password" id="password" required="required"/>
+        </div>
+        <div class="form-group">
+            <label for="passwordRepeated">Repeat</label>
+            <input class="form-control input-lg" type="password" name="passwordRepeated" id="passwordRepeated" required="required"/>
+        </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
     </div>
-    <div>
-        <label for="firstName">firstName</label>
-        <input name="firstName" id="firstName" required="required" autofocus="autofocus"/>
-    </div>
-    <div>
-        <label for="lastName">lastName</label>
-        <input name="lastName" id="lastName" required="required" autofocus="autofocus"/>
-    </div>
-    <div>
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" required="required"/>
-    </div>
-    <div>
-        <label for="passwordRepeated">Repeat</label>
-        <input type="password" name="passwordRepeated" id="passwordRepeated" required="required"/>
-    </div>
-    <div>
-        <label for="role">Role</label>
-        <select name="role" id="role" required="required">
-            <option value="USER"> USER</option>
-            <option value="ADMIN"> ADMIN</option>
-        </select>
-    </div>
-    <button type="submit">Save</button>
 </form>
 
 <!--<@spring.bind "form" />

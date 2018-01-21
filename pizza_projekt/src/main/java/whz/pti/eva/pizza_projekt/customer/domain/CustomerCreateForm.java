@@ -18,6 +18,4 @@ public class CustomerCreateForm {
 
     @NotEmpty @Getter @Setter private String passwordRepeated = "";
 
-    @NotNull  @Getter @Setter private Role role = Role.USER;
-
 }

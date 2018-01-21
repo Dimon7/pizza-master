@@ -27,8 +27,8 @@ public class PizzaServiceImpl implements PizzaService {
 
     @Override
     public double gesamptpreis(List<Item> items) {
-        System.out.println(items);
-        double preis = 0.0;
+
+        double preis = 0;
 
 
         for(Item item : items){

@@ -7,6 +7,13 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"/>
     <link rel="stylesheet" type="text/css" href="css/mystyle.css" th:href="@{css/mystyle.css}" media="screen"/>
 </head>
+
+<style>
+
+    .menge{
+        width: 50px;
+    }
+</style>
 <body>
 
 <div class="container">
@@ -21,6 +28,7 @@
             <thead>
                 <td> Menge </td>
                 <td> Pizza </td>
+                <td> Description </td>
                 <td> Preis </td>
             </thead>
 
@@ -28,15 +36,18 @@
 
                     <tr th:each="p : ${pizza}">
 
-                        <td class="col-md-2"><input class="menge" type="number" name="quantity"/></td>
-                        <td th:text="${p.name}" ></td>
-                        <td th:text="${p.price + '$'}"></td>
+                        <td class="col"><input class="menge" type="number" name="quantity"/></td>
+                        <td class="col" th:text="${p.name}" ></td>
+                        <td class="col" th:text="${p.description}"></td>
+                        <td class="col" th:text="${p.price + '$'}"></td>
                         <input type="hidden" name="pizza" />
                     </tr>
 
                 </tbody>
         </table>
-        <input type="submit" value="In den Warenkorp" />
+
+        <input th:if="${#strings.toString(currentCustomer.role) == 'USER'}" class="btn btn-info" type="submit" value="In den Warenkorp" />
+
     </form>
 
 </div>

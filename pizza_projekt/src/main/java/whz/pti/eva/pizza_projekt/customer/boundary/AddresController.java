@@ -42,7 +42,7 @@ public class AddresController {
                                        @RequestParam String  zipCode) {
 
         customerService.editAddress(Integer.parseInt(id), street, housenumber, town, zipCode);
-        return "redirect:user_details";
+        return "redirect:user";
     }
 
     @RequestMapping("delete_addres")
@@ -55,7 +55,7 @@ public class AddresController {
         customerService.deleteAdres(Integer.parseInt(id));
 
 
-        return "redirect:user_details";
+        return "redirect:user";
     }
 
     @RequestMapping(value="finish_add_addres", method = RequestMethod.POST)
@@ -76,7 +76,7 @@ public class AddresController {
         Customer customer = customerService.getCustomerByLoginName(loginName).get();
         customer.setAddresses(address);
         customerRepository.save(customer);
-        return "redirect:users";
+        return "redirect:user";
     }
 
     @RequestMapping("add_addres")

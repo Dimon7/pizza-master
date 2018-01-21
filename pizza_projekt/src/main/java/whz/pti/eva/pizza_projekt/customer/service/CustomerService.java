@@ -22,7 +22,7 @@ public interface CustomerService {
 
     public List<Address> getAddressesForCustomer(Customer c);
 
-    Customer editCustomer(String firstName, String lastName, String loginName, String passwordHash);
+    Customer editCustomer(String firstName, String lastName, String loginName);
 
     Customer create(CustomerCreateForm form);
 

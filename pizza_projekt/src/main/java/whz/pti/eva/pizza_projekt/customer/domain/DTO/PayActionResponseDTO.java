@@ -3,7 +3,10 @@ import lombok.*;
 
 @ToString
 public class PayActionResponseDTO {
-    private boolean payment;
+
+
+    @Getter private boolean payment;
+
     private String token1 = "", token2 = "", token3 = "", description = "";
 
     public PayActionResponseDTO() {

@@ -46,12 +46,19 @@
 
     <form th:action="@{/bestellen}" method="post" class="bestellen">
         <button class="btn-primary" type="submit">Kostenpflichtig bestellen</button>
+        <input type="hidden" name="gesamptpreis" th:value="${gesamptpreis}"/>
     </form>
 
     <form th:action="@{/leeren}" method="post" class="leeren" >
         <button class="btn-danger" type="submit" >Warenkorp leeren</button>
     </form>
 
+    <div th:if="${error != null}">
+        <br />
+        <div class="alert alert-danger">
+            <span th:text="${error}"></span>
+        </div>
+    </div>
 
 
 </div>

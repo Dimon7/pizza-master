@@ -7,12 +7,12 @@ import java.io.Serializable;
 public class TransferDTO implements Serializable{
 
     @Getter String to;
-    @Getter int amount;
+    @Getter double amount;
 
     public TransferDTO() {
     }
 
-    public TransferDTO(String to, int amount) {
+    public TransferDTO(String to, double amount) {
         this.to = to;
         this.amount = amount;
     }

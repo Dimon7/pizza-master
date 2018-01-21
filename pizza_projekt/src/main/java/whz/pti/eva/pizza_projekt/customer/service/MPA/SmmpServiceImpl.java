@@ -1,5 +1,6 @@
 package whz.pti.eva.pizza_projekt.customer.service.MPA;
 
+import com.sun.org.apache.xpath.internal.SourceTree;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,7 @@ import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import whz.pti.eva.pizza_projekt.customer.domain.DTO.AccountResponseDTO;
 import whz.pti.eva.pizza_projekt.customer.domain.DTO.PayActionResponseDTO;
+import whz.pti.eva.pizza_projekt.customer.domain.DTO.PayUserDTO;
 import whz.pti.eva.pizza_projekt.customer.domain.DTO.TransferDTO;
 
 @Service
@@ -26,12 +28,37 @@ public class SmmpServiceImpl implements SmmpService {
     @Value("${my.smmp.plainCreds}")
     String plainCreds;
 
+
+    public void createPayUser(String name){
+
+        String uriReturn;
+        ResponseEntity<?> response = null;
+        RestTemplate restTemplate = new RestTemplate();
+//        String plainCreds = plainCredsUser;
+        byte[] plainCredsBytes = plainCreds.getBytes();
+        byte[] base64CredsBytes = Base64.encodeBase64(plainCredsBytes);
+        String base64Creds = new String(base64CredsBytes);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "Basic " + base64Creds);
+        HttpEntity<String> request = new HttpEntity<String>(headers);
+
+
+        PayUserDTO payUserDTO = new PayUserDTO();
+        payUserDTO.setName(name);
+
+        HttpEntity<PayUserDTO> requestPost = new HttpEntity<>(payUserDTO, headers);
+        uriReturn = MyUrl + "/create";
+
+        response = restTemplate.exchange(uriReturn, HttpMethod.POST, requestPost, AccountResponseDTO.class);
+
+    }
+
     @Override
     public PayActionResponseDTO doPayAction(String from, String to, String pcontent) {
         String token1 ="", token2 ="", token3 ="";
 
-        PayActionResponseDTO payActionResponse =
-                new PayActionResponseDTO().payment(false).description("unbekanntes Problem. Transfer nicht erfolgreich");
+        PayActionResponseDTO payActionResponse =  new PayActionResponseDTO().payment(false).description("unbekanntes Problem. Transfer nicht erfolgreich");
 //                new PayActionResponseDTO().payment(false).description(messageSource.getMessage("unbekanntes Problem. Transfer nicht erfolgreich", null,  LocaleContextHolder.getLocale())); //my.action.unknownProblem
 
         String[] tokens = pcontent.split("\\s+");
@@ -67,17 +94,16 @@ public class SmmpServiceImpl implements SmmpService {
     private PayActionResponseDTO smmpAccountCommunication(String token1, String token2, String token3, String from, PayActionResponseDTO payActionResponse) {
 
         String uriReturn;
-        ResponseEntity<?> response = null;
+        ResponseEntity<?> response;
         RestTemplate restTemplate = new RestTemplate();
-//        String plainCreds = plainCredsUser;
+
         byte[] plainCredsBytes = plainCreds.getBytes();
         byte[] base64CredsBytes = Base64.encodeBase64(plainCredsBytes);
         String base64Creds = new String(base64CredsBytes);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Basic " + base64Creds);
-        HttpEntity<String> request = new HttpEntity<String>(headers);
-
+        HttpEntity<String> request = new HttpEntity<>(headers);
         try {
             switch (token1) {
                 case "get":
@@ -100,10 +126,12 @@ public class SmmpServiceImpl implements SmmpService {
                     break;
                 case "transfer":
                     headers.setContentType(MediaType.APPLICATION_JSON);
-                    TransferDTO transferDTO = new TransferDTO(token2, Integer.valueOf(token3));
+                    TransferDTO transferDTO = new TransferDTO(token2, Double.valueOf(token3));
                     HttpEntity<TransferDTO> requestPost = new HttpEntity<>(transferDTO, headers);
                     uriReturn = MyUrl + from + "/payment";
+
                     response = restTemplate.exchange(uriReturn, HttpMethod.POST, requestPost, AccountResponseDTO.class);
+
                     break;
                 default:
                     return payActionResponse.description("falsche Syntax - Befehl unbekannt !");
@@ -121,13 +149,18 @@ public class SmmpServiceImpl implements SmmpService {
         }
 
         AccountResponseDTO accountResponse = (AccountResponseDTO) response.getBody();
+        System.out.println("Code + " + accountResponse.getCode());
         payActionResponse.description(accountResponse.getCode());
 
-        if (response.getStatusCode().equals(HttpStatus.OK))
-        {
+        if (response.getStatusCode().equals(HttpStatus.OK)) {
             payActionResponse.payment(true);
         }
         else {
+
+            payActionResponse.payment(false);
+        }
+
+        if("no many".contains(accountResponse.getCode())){
             payActionResponse.payment(false);
         }
         return payActionResponse;

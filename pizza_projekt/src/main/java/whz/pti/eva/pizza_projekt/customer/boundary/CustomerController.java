@@ -33,6 +33,8 @@ public class CustomerController {
 
     @Autowired  private SmmpService smmpService;
 
+
+
     @InitBinder("form")
     public void initBinder(WebDataBinder binder) {
         binder.addValidators(createFormValidator);
@@ -81,6 +83,8 @@ public class CustomerController {
             bindingResult.reject("loginName.exists", "LoginName already exists");
             return "user_create";
         }
+
+
         return "redirect:/users";
     }
 
@@ -95,10 +99,9 @@ public class CustomerController {
     @RequestMapping("finish_edit_customer_data")
     public String  finishEditCustomerData(@RequestParam String firstName,
                                           @RequestParam String lastName,
-                                          @RequestParam String loginName,
-                                          @RequestParam String passwordHash){
+                                          @RequestParam String loginName ){
 
-        customerService.editCustomer( firstName,  lastName,  loginName,  passwordHash);
+        customerService.editCustomer( firstName,  lastName,  loginName);
 
         return "redirect:user";
     }

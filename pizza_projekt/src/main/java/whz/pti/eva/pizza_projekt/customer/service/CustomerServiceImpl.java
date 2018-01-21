@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import whz.pti.eva.pizza_projekt.customer.domain.repo.AddressRepository;
 import whz.pti.eva.pizza_projekt.customer.domain.repo.CustomerRepository;
 import whz.pti.eva.pizza_projekt.customer.domain.repo.PizzaRepository;
+import whz.pti.eva.pizza_projekt.customer.service.MPA.SmmpServiceImpl;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -25,6 +26,11 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     PizzaRepository pizzaRepository;
 
+    @Autowired
+    ShopServiceImpl shopService;
+
+    @Autowired
+    SmmpServiceImpl smmpService;
 
     @Override
     public List<Customer> getAllCustomer() {
@@ -67,14 +73,13 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer editCustomer( String firstName, String lastName, String loginName, String passwordHash) {
+    public Customer editCustomer( String firstName, String lastName, String loginName) {
 
         Customer cust = customerRepository.findByLoginName(loginName);
 
 
         cust.setFirstName(firstName);
         cust.setLastName(lastName);
-        cust.setPasswordHash(passwordHash);
 
         customerRepository.save(cust);
 
@@ -89,9 +94,15 @@ public class CustomerServiceImpl implements CustomerService {
             customer.setFirstName(form.getFirstName());
             customer.setLastName(form.getLastName());
             customer.setPasswordHash(new BCryptPasswordEncoder().encode(form.getPassword()));
-            customer.setRole(form.getRole());
+            customer.setRole(Role.USER);
 
-            return customerRepository.save(customer);
+            customerRepository.save(customer);
+            shopService.addShoppingCart(customer);
+
+            smmpService.createPayUser(form.getLoginName());
+
+            return customer;
+
 
     }
 
